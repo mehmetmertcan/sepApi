@@ -24,12 +24,9 @@ public class PromoCodeStepDefs extends TestBase{
 
         // Explicitly set Content-Type to application/json
         givenPart
-                .header("Content-Type", "application/json")
                 .body("{\"priceId\":\"" + priceId + "\", \"productId\":\"" + productId + "\", \"promoCode\":\"" + promoCode + "\"}");
 
-
     }
-
 
     @And("{string} field in the response should be an integer")
     public void fieldInTheResponseShouldBeAnInteger(String basePrice) {
