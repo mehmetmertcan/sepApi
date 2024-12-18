@@ -5,6 +5,7 @@ Feature: Submitting a promo code
 
   Scenario Outline: Submit valid promo code "off50" and validate success
     Given request accept type is "application/json"
+    And content type is "application/json"
     When the user has the priceId "price_1OXpPoJmxFuDfdznFNJZKs0I" , productId "prod_PMYWvWHeM3LeY9" and the promoCode is "off50"
     When I sent POST request to "/plans/promo-code" endpoint
     Then status code should be 200
@@ -55,6 +56,4 @@ Feature: Submitting a promo code
     Examples:
       | promoCode | isValid | message         |
       | abc123    | false   | Invalid Coupon. |
-
-
 

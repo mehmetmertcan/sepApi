@@ -35,4 +35,9 @@ public class PromoCodeStepDefs extends TestBase{
         System.out.println("basePrice = " + basePrice);
         thenPart.body(basePrice, instanceOf(Integer.class));
     }
+
+    @And("content type is {string}")
+    public void contentTypeIs(String contentType) {
+        givenPart.contentType(contentType);
+    }
 }
