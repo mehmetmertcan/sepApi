@@ -6,20 +6,19 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
+import org.junit.Assert;
 
 public class ProductResourceDefs extends TestBase {
 
 
     @Given("the API endpoint {string} is accessible")
     public void the_api_endpoint_is_accessible(String endPoint) {
-        givenPart.pathParam("ImsProgramCode","invalidCode");
-        response = givenPart.when().get(endPoint);
+        givenPart.pathParam("lmsProgramCode","invalidCode");
+        response = givenPart.when().get(endPoint + "/{lmsProgramCode}");
         thenPart = response.then();
         jp = response.jsonPath();
-        String endpointwithparam = endPoint.replace("{ImsProgramCode}","invalidCode");
-        response = givenPart.when().get(endpointwithparam);
-        System.out.println("endPoint = " + endPoint);
-        System.out.println("endpointwithparam = " + endpointwithparam);
+
+
 
     }
 
@@ -42,6 +41,7 @@ public class ProductResourceDefs extends TestBase {
         thenPart.statusCode(expectedStatusCode);
         System.out.println("expectedStatusCode = " + expectedStatusCode);
 
+
     }
 
     @Then("the response Content-Type should be {string}")
@@ -49,12 +49,24 @@ public class ProductResourceDefs extends TestBase {
         thenPart.contentType(expectedContentType);
         System.out.println("expectedContentType = " + expectedContentType);
 
+
     }
 
     @Then("the response body should contain an error message {string}")
     public void the_response_body_should_contain_an_error_message(String expectedBody) {
-        thenPart.body("errorMessage",Matchers.equalTo(expectedBody));
-        System.out.println("expectedBody = " + expectedBody);
+        thenPart.body("error",Matchers.notNullValue());
+        //thenPart.body("error.name",Matchers.equalTo("Not Found"));
+      //  thenPart.body("error.message",Matchers.equalTo(expectedBody));
+       // thenPart.body(Matchers.equalTo("Product for the requested program could not be found."));
+        System.out.println("response.getBody().asString() = " + response.getBody().asString());
+        String actualMessage = response.jsonPath().getString("error.message");
+        System.out.println("Actual Error Message " + actualMessage);
+     //   Assert.assertEquals("Product for the requested program could not be found.",actualMessage,expectedBody);
+       // Assert.assertEquals("Product could not be found.",actualMessage);
+        Assert.assertEquals(expectedBody,actualMessage);
+        Assert.assertEquals("Error message mismatch!", expectedBody, actualMessage);
+
+
 
     }
 
@@ -69,17 +81,14 @@ public class ProductResourceDefs extends TestBase {
 
     }
 
-    @And("response body should contain the error message Product could not be found")
-    public void responseBodyShouldContainTheErrorMessageProductCouldNotBeFound(String expectbody) {
-        thenPart.body("errorMessage",Matchers.equalTo(expectbody));
-        System.out.println("expectbody = " + expectbody);
-    }
-
-
     @And("response body should contain the error message {string}")
     public void responseBodyShouldContainTheErrorMessage(String expectBody) {
-        thenPart.body("errorMessage",Matchers.equalTo(expectBody));
-        System.out.println("expectBody = " + expectBody);
+      //  thenPart.body("error.Message",Matchers.equalTo(expectBody));
+        System.out.println("Response Body: " + response.getBody().asString());
+        String actualMessage = response.jsonPath().getString("error.message");
+        System.out.println("Actual Error Message: " + actualMessage);
+        Assert.assertEquals("Error message mismatch!", expectBody, actualMessage);
+
 
     }
 

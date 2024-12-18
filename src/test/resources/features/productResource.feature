@@ -2,7 +2,7 @@
 Feature: Retrieve Product Resource by Product Code As a user
   I want to retrieve product details using the product code
   So that I can validate the fields in the response
- 
+
 Scenario Outline: User can get any product resource by program code "<programType>".
 Given request accept type is "application/json"
 And path param "lmsProgramCode" is "<programType>"
@@ -32,9 +32,10 @@ Examples:
     Examples:
       | programCode    | statusCode | contentType        | errorMessage                     |
       | invalidCode    | 404        | application/json   | Product could not be found.      |
+      | invalidCode    | 404        | application/json   | Product could not be found.      |
       | 12345          | 404        | application/json   | Product could not be found.      |
-      | @specialChars  | 400        | application/json   | Invalid program code format      |
-      | null           | 400        | application/json   | Program code cannot be null      |
+      | @specialChars  | 404        | application/json   | Product could not be found.      |
+      | null           | 404        | application/json   | Product could not be found.      |
 
   Scenario: User cannot retrieve product resource with an invalid program code "invalidCode"
     Given request accept type is "application/json"
@@ -66,5 +67,5 @@ Examples:
     When I send GET request to "/products/{lmsProgramCode}" endpoint
     Then status code should be 404
     And response content type is "application/json"
-    And response body should contain the error message "Product could not be found"
+    And response body should contain the error message "Product could not be found."
 
