@@ -25,6 +25,7 @@ Feature: Submitting a promo code
 
   Scenario Outline: Submit expired promo code "exp50" and validate response
     Given request accept type is "application/json"
+    And content type is "application/json"
     When the user has the priceId "price_1OXpPoJmxFuDfdznFNJZKs0I" , productId "prod_PMYWvWHeM3LeY9" and the promoCode is "exp50"
     When I sent POST request to "/plans/promo-code" endpoint
     Then status code should be 200
@@ -43,6 +44,7 @@ Feature: Submitting a promo code
 #Negative Test Scenario
   Scenario Outline: Submit promo code other than "exp50" and "off50" and validate response
     Given request accept type is "application/json"
+    And content type is "application/json"
     When the user has the priceId "price_1OXpPoJmxFuDfdznFNJZKs0I" , productId "prod_PMYWvWHeM3LeY9" and the promoCode is "abc123"
     When I sent POST request to "/plans/promo-code" endpoint
     Then status code should be 200
