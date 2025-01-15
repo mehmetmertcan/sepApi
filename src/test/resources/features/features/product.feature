@@ -1,4 +1,4 @@
-@wip
+
 Feature: Product Feature Endpoint
 
   Scenario: Agreement endpoint

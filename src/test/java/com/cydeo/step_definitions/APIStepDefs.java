@@ -54,8 +54,8 @@ public class APIStepDefs extends TestBase {
         thenPart.body(path, Matchers.notNullValue());
 
         // OPT2
-        int aggrementID = jp.getInt(path);
-        Assert.assertNotNull(aggrementID);
+        // int aggrementID = jp.getInt(path);
+        // Assert.assertNotNull(aggrementID);
 
     }
 
