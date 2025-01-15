@@ -3,9 +3,9 @@ Feature: Retrieve Product Resource by Product Code As a user
   I want to retrieve product details using the product code
   So that I can validate the fields in the response
 #Positive test
-Scenario Outline: User can get any product resource by program code "<programType>".
+Scenario Outline: User can get any product resource by program code "<programCode>".
 Given request accept type is "application/json"
-And path param "lmsProgramCode" is "<programType>"
+And path param "lmsProgramCode" is "<programCode>"
 When I sent GET request to "/products/{lmsProgramCode}" endpoint
 Then status code should be 200
 And response content type is "application/json"
@@ -16,7 +16,7 @@ And "data.lmsProgramName" field should be equal "<programName>"
 And "data.isForTeens" field should be equal "<teensResult>"
 
 Examples:
-| programType | productId | programId | programName                   | teensResult |
+| programCode | productId | programId | programName                   | teensResult |
 | taws        | 1         | 56        | Test Automation with Selenium | false       |
 | rfep        | 2         | 11        | React Front End Program       | false       |
 | jfft        | 3         | 4         | Java Foundations for Teens    | true        |
